@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Library</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  </head>
+<body style="background-color:yellowgreen;">
+  <div style="width: 100%;">
+      <div style="float: center;"><img src="images/images.jpg" /></div>
+	<font size="24">
+      <div style="text-align:center; color: Blue;" class="headline">Central Library System</div> </font>
+      <div style="float: right;"><a href="{{ url }}">{{ url_linktext }}</a> {{user.nickname}}</div>
+  </div>
+
+<div style="clear: both;"/>  
+
+{# Check if any book had been issued, only in this case render the table #}
+
+{% if numberbooks %}
+ 
+You have a total number of {{numberbooks}} books. 
+
+<table>
+  <tr>
+    
+
+      <th> Book-Name </th>
+	<th> Book-Author </th>      
+	<th> Book-ID </th>
+      <th> Issue-Date </th>
+      <th> Due-Date </th>
+      <th> Status </th>
+   </tr>
+
+{% for book in books %}
+<tr>
+<td>
+{{book.bookname}}
+</td>
+<td>
+{{book.bookauthor}}
+</td>
+<td>
+{{book.bookid}}
+</td>
+
+<td>
+{{book.issuedate}}
+</td>
+<td>
+{{book.duedate}}
+</td>
+<td>
+{{book.status}}
+</td>
+<td>
+<a class="done" href="/done?id={{book.key.id}}" >Done</a>
+</td>
+</tr> 
+{% endfor %}
+</table>
+
+{% endif %}
+
+
+<hr />
+
+
+<font size="06">
+<div class="headline">Issue new book?</div></font>
+
+{% if user %}
+
+<form action="/new" method="post">
+  <table>
+    <tr>
+      <td><label for="bookname">Book Name</label></td>
+      <td><input type="text" name="bookname" id="bookname" size="80"/></td>
+    </tr>
+	<tr>
+      <td><label for="bookauthor">Book Author</label></td>
+      <td><input type="text" name="bookauthor" id="bookauthor" size="80"/></td>
+    </tr>
+    <tr>
+      <td><label for="bookid">Book ID</label></td>
+      <td><input type="number" name="bookid" id="bookid" size="80"/></td>
+    </tr>
+    
+
+    <tr>
+      <td><label for="issuedate">Issue Date</label></td>
+      <td><input type="Date" name="issuedate" id="issuedate"/></td>
+    </tr>
+    <tr>
+      <td><label for="duedate">Due Date</label></td>
+      <td><input type="Date" name="duedate" id="duedate"/></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="left"><input type="submit" value="Submit"/></td>
+    </tr>
+  </table>
+</form>
+
+{% else %}
+Login with your Google Account to create and review your library account.
+{% endif%}
+
+
+</body>
+</html> 
